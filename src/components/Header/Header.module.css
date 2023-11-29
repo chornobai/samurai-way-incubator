@@ -24,6 +24,10 @@
     text-decoration: none;
     padding: 10px;
     }
+
+    .item{
+        background-color: rgba(61, 73, 42, 0.226);
+    }
     /* .login{
         background: pink;
         border-radius: 10%;

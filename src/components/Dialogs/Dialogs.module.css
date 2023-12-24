@@ -27,3 +27,6 @@ ul{
  .active {
 color:white;
  }
+ .messages_area {
+    grid-column: 2/3;
+ }

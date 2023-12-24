@@ -1,0 +1,7 @@
+yarn add v1.22.19
+[1/4] Resolving packages...
+warning @storybook/react-webpack5 > @storybook/builder-webpack5 > webpack-dev-middleware > memfs@3.6.0: this will be v4
+[2/4] Fetching packages...
+error lru-cache@10.1.0: The engine "node" is incompatible with this module. Expected version "14 || >=16.14". Got "16.13.0"
+error Found incompatible module.
+info Visit https://yarnpkg.com/en/docs/cli/add for documentation about this command.

@@ -2,61 +2,59 @@ import React, { ChangeEvent } from 'react';
 import { useState } from 'react';
 import s from './MyPosts.module.css';
 import { Post } from './Post/Post';
-import { PostsType } from '../../../redux/store';
+import { ActionTypes, PostsType } from '../../../redux/store';
 import { v1 } from 'uuid'
+import { changetAC, addPostAC } from '../../../redux/profile-reducer';
 export type MyPostsTypeComponent = {
   posts: Array<PostsType>,
- 
+  // addPost: (newtext: string) => void
+  // changeTextPost: (newtext: string) => void
+  updateText: string
+  // deletePost: (id: string) => void
+  // addLike: (id: string) => void
+  dispatch: (action: ActionTypes) => void
 }
 
-const MyPosts:React.FC<MyPostsTypeComponent> = (props) => {
-   
-let [textArea, setTextArea]=useState("")
-
-let [posts, setNewPost]=useState(props.posts)
+const MyPosts: React.FC<MyPostsTypeComponent> = (props) => {
 
 
-const onChangeHandler = (event:ChangeEvent<HTMLTextAreaElement>) => {
-    setTextArea(event.currentTarget.value )
-  
-}
+  const onChangeHandler = (event: ChangeEvent<HTMLTextAreaElement>) => {
+    let newValue = event.currentTarget.value
+    // props.changeTextPost(newValue)
+    props.dispatch(changetAC(newValue))
+  }
 
-const addPost = (message:string) => {
-  if(textArea.trim() !== '') {
-  let post = {id:v1(), messageText:message, like: 156}
-let postNew=[post,...posts]
-setNewPost(postNew)
-setTextArea('')  
+  const addPost = () => {
+
+    props.dispatch(addPostAC(props.updateText))
   }
 
 
-}
 
-const deletePost = (id:string) => {
-  let filteredPost = posts.filter(i=> i.id !== id)
-  setNewPost(filteredPost) 
-}
+
 
 
   return (
-   
+
     <div className={s.myposts}>
-   
-    <h2>My Post</h2>
-     <div className='new_post'><textarea value={textArea} onChange={onChangeHandler} name="newpost" id="newpost" cols={30} rows={10}></textarea>
-     <button onClick={()=> {addPost(textArea.trim())}} type ="button" aria-label="Добавить пост">ADD POST</button>
-     <button onClick={()=> {setTextArea("")}}type ="button" aria-label="Очистить сообщение">Clean</button>
-     </div>
-     <ul>
-      
-     </ul>
-     <Post posts = {posts} deletePost= {deletePost} />
-     
-       
+
+      <h2>My Post</h2>
+
+      <div className='new_post'><textarea value={props.updateText} onChange={onChangeHandler} name="newpost" id="newpost" cols={30} rows={10}></textarea>
+        <button onClick={addPost} type="button" aria-label="Добавить пост">ADD POST</button>
+
+      </div>
+      <ul>
+
+      </ul>
+      <Post posts={props.posts} dispatch={props.dispatch} />
+
+
+
 
     </div >
 
   );
 }
 
-export {MyPosts};
+export { MyPosts };

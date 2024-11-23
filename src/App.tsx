@@ -1,46 +1,59 @@
-import React from 'react';
-import './App.css';
-import { BrowserRouter, Route } from 'react-router-dom'
-import { Header } from './components/Header/Header';
-import { Navbar } from './components/Navbar/Navbar';
-import { Profile } from './components/Profile/Profile';
-import { Dialogs } from './components/Dialogs/Dialogs';
-import { ActionTypes, RootStateType, RootStore } from './redux/store';
+import React, { lazy, Suspense, useEffect } from "react";
+import "./App.css";
+import { BrowserRouter, Route, withRouter } from "react-router-dom";
+import Navbar from "./components/Navbar/Navbar";
+import LinearProgress from "@mui/material/LinearProgress";
+import { connect } from "react-redux";
+import { compose } from "redux";
+import { AppStateType } from "./redux/redux-store";
+import { getInTC } from "./redux/app-reducer";
+import { getIniSelector } from "./redux/selectors";
 
-type AppType = {
-  store: RootStore
-  state: RootStateType
-  dispatch: (action: ActionTypes) => void
-}
+// Lazy import компонентов
+const ProfileContainer = lazy(() => import("./components/Profile/Profile"));
+const DialogsContainer = lazy(
+  () => import("./components/Dialogs/DialogsContainer")
+);
+const UsersContainer = lazy(() => import("./components/Users/UsersContainer"));
+const HeaderContainer = lazy(
+  () => import("./components/Header/HeaderContainer")
+);
+const Login = lazy(() => import("./components/Login/Login"));
 
-function App(props: AppType) {
+const App: React.FC<any> = (props) => {
+  useEffect(() => {
+    props.getInTC();
+  }, []);
 
-  console.log(props.store.getState().profilePage.posts)
-  let newSms = props.store.getState().dialogPage.newSms
-  let newValue = props.store.getState().profilePage.newValue
-  let links = props.store.getState().headerBlock.headerLink
-  let dialogsName = props.store.getState().dialogPage.dialogs
-  let dialogsMessages = props.store.getState().dialogPage.dialogMessages
-  let profilePosts = props.store.getState().profilePage.posts
+  if (!props.ini) return <LinearProgress />;
+
   return (
     <BrowserRouter>
       <div className="App">
-        <Header links={links} />
-        <Navbar />
-
-        <Route path='/dialogs' render={() => <Dialogs dialogsName={dialogsName} dialogsMessages={dialogsMessages} newSms={newSms} dispatch={props.dispatch} />} />
-        <Route path={'/profile'} render={() => <Profile
-          profilePosts={profilePosts}
-          // addPost={props.store.addPost.bind(props.store)}                                      благодаря диспачу не нужно тащить в себе все эти функции
-          // changeTextPost={props.store.changeTextPost.bind(props.store)}
-          updateText={newValue}
-          // deletePost={props.store.deletePost.bind(props.store)}
-          // addLike={props.store.addLike.bind(props.store)}
-          dispatch={props.dispatch} />} />
-
+        <Suspense fallback={<LinearProgress />}>
+          <HeaderContainer />
+          <Navbar />
+          <Route path="/" exact render={() => <ProfileContainer />} />
+          <Route path="/dialogs" render={() => <DialogsContainer />} />
+          <Route path="/profile" render={() => <ProfileContainer />} />
+          <Route path="/users" render={() => <UsersContainer />} />
+          <Route path="/login" render={() => <Login />} />
+        </Suspense>
       </div>
     </BrowserRouter>
   );
-}
+};
 
-export default App;
+type mapStateToPropsType = {
+  ini: boolean;
+};
+const mapStateToProps = (state: AppStateType): mapStateToPropsType => {
+  return {
+    ini: getIniSelector(state),
+  };
+};
+
+export default compose<React.ComponentType>(
+  withRouter,
+  connect(mapStateToProps, { getInTC })
+)(App);

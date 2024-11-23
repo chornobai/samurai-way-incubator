@@ -1,60 +1,81 @@
-import React, { ChangeEvent } from 'react';
-import { useState } from 'react';
-import s from './MyPosts.module.css';
-import { Post } from './Post/Post';
-import { ActionTypes, PostsType } from '../../../redux/store';
-import { v1 } from 'uuid'
-import { changetAC, addPostAC } from '../../../redux/profile-reducer';
-export type MyPostsTypeComponent = {
-  posts: Array<PostsType>,
-  // addPost: (newtext: string) => void
-  // changeTextPost: (newtext: string) => void
-  updateText: string
-  // deletePost: (id: string) => void
-  // addLike: (id: string) => void
-  dispatch: (action: ActionTypes) => void
-}
+import React from "react";
+import s from "./MyPosts.module.css";
+import { MyPostsPropsType } from "./MyPostsContainer";
+import { Field, reduxForm } from "redux-form";
+import { Textarea } from "../../Form/FormControls/Forms_Controls";
+import {
+  maxlenghtCreator,
+  requiredField,
+} from "../../../utils/validators/validators";
+import image from "../../../img/images.jpeg";
 
-const MyPosts: React.FC<MyPostsTypeComponent> = (props) => {
+const MyPosts: React.FC<MyPostsPropsType> = React.memo((props) => {
+  const max20 = maxlenghtCreator(20);
+  const onSubmitPost = (data: any) => {
+    props.addPostNow(data.PostName);
+    props.addPostNow((data.PostName = ""));
+  };
+  const PostForm = (props: any) => {
+    return (
+      <form onSubmit={props.handleSubmit}>
+        <Field
+          name={"PostName"}
+          id={"PostName"}
+          component={Textarea}
+          placeholder={"message"}
+          validate={[requiredField, max20]}
+          className={s.textfield_post}
+        />
+        <button className={s.post_btn_sbm}>Send</button>
+      </form>
+    );
+  };
 
+  const PostReduxForm = reduxForm({
+    // a unique name for the form
+    form: "PostProfilePage",
+  })(PostForm);
 
-  const onChangeHandler = (event: ChangeEvent<HTMLTextAreaElement>) => {
-    let newValue = event.currentTarget.value
-    // props.changeTextPost(newValue)
-    props.dispatch(changetAC(newValue))
-  }
+  let postsItem = props.posts.map((i) => {
+    const onDeleteHandler = () => {
+      props.onDeleteHandler(i.id);
+    };
+    const onAddLikeHandler = () => {
+      props.onAddLikeHandler(i.id);
+    };
+    return (
+      <li className={s.post_item} key={i.id}>
+        <img
+          className={s.post_img}
+          src={props.profile.photos.large || image}
+          alt="avatar"
+          width="50"
+          height="50"
+        />
+        <div>
+          <blockquote>{i.messageText}</blockquote>
+          <button onClick={onDeleteHandler}>X</button>
+        </div>
 
-  const addPost = () => {
-
-    props.dispatch(addPostAC(props.updateText))
-  }
-
-
-
-
-
+        <div>
+          <button className={s.heart_btn} onClick={onAddLikeHandler}>
+            {i.like}
+          </button>
+        </div>
+      </li>
+    );
+  });
 
   return (
-
     <div className={s.myposts}>
+      <h2>My Posts</h2>
 
-      <h2>My Post</h2>
-
-      <div className='new_post'><textarea value={props.updateText} onChange={onChangeHandler} name="newpost" id="newpost" cols={30} rows={10}></textarea>
-        <button onClick={addPost} type="button" aria-label="Добавить пост">ADD POST</button>
-
+      <div className="new_post">
+        <PostReduxForm onSubmit={onSubmitPost} />
       </div>
-      <ul>
-
-      </ul>
-      <Post posts={props.posts} dispatch={props.dispatch} />
-
-
-
-
-    </div >
-
+      <ul className={s.list_post}>{postsItem}</ul>
+    </div>
   );
-}
+});
 
 export { MyPosts };

@@ -1,32 +1,107 @@
 
 .dialogs {
-    background: salmon;
-    display:grid;
+    font-family: inherit;
+    padding: 2rem;
+    margin-left: 10px;
+    background: transparent;
+    display: grid;
     grid-template-columns: 1fr 1fr;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+    ul {
+        list-style: none;
+        padding: 20px;
+        margin: 0 0 30px 0;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+    }
+
+
 }
 
-ul{
-    list-style: none;
-    padding:0;
-    margin: 0;
+.avatar_dialog {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
 }
-    .list{
-        list-style-type: none;
-        display: flex;
-        justify-content: space-between;
-    
-    
-    }
-    
-    .link{
-        display: block;
-    color:black;
+
+
+.dialog {
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+}
+
+.list {
+    list-style-type: none;
+    display: flex;
+    justify-content: space-between;
+
+
+}
+
+.link {
+    display: block;
+    color: black;
     text-decoration: none;
     padding: 10px;
-    }
- .active {
-color:white;
- }
- .messages_area {
+}
+
+.active {
+    color: darkslategrey;
+    font-family: inherit;
+    text-decoration: underline;
+    text-decoration-color: coral;
+    transition: ease 0.3s;
+    text-underline-position: under;
+}
+
+.messages_area {
     grid-column: 2/3;
- }
+    padding: 0 30px;
+    width: 100%;
+    box-sizing: border-box;
+
+}
+
+.message_form {
+    display: flex;
+    flex-direction: column;
+
+    row-gap: 30px;
+
+    button {
+        align-self: flex-end;
+        border: none;
+        color: white;
+        font-family: inherit;
+        font-weight: bold;
+        background-color: #32816e;
+    }
+}
+
+
+.text_message {
+    width: 100%; /* Растягивается на всю ширину родителя */
+    height: auto; /* Позволяет высоте изменяться динамически */
+    min-height: 50px; /* Минимальная высота для удобства */
+    max-height: 200px; /* Ограничение по высоте, чтобы не растягивалось слишком сильно */
+    padding: 10px; /* Внутренние отступы для удобства ввода текста */
+    resize: vertical; /* Пользователь может изменять только высоту */
+    box-sizing: border-box; /* Учитывает padding и border в ширине и высоте */
+    font-family: inherit; /* Наследует шрифт от родителя */
+    font-size: 1rem; /* Универсальный размер текста */
+
+}
+
+
+.dialogitem {
+    display: flex;
+}
+
+.dialogMessagetem {
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid darkseagreen;
+}

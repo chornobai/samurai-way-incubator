@@ -1,20 +1,38 @@
 
+.navbar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 
-    .list{
-        list-style-type: none;
-        display: flex;
-        flex-direction: column;
-        /* max-width: 25%; */
-        justify-content:flex-start;
-        background: peachpuff;
-        margin: 0;
-        height: 100%;
-        padding: 20px 0;
-    
-    
+    background: peachpuff;
+    padding: 1rem 1rem;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+
+}
+
+.list {
+    width: 100%;
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    max-width: fit-content;
+    justify-content: flex-start;
+
+    margin: 0;
+    height: 100%;
+
+    a {
+        text-transform: uppercase;
+        font-size: 0.9rem;
+        font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+
+        &:hover {
+            transform: scale(1.2);
+        }
     }
-    
-    .activeclass{
-        color:black;
-        font-weight: 700;
-    }
+}
+
+.activeclass {
+    color: black;
+    font-weight: 700;
+}

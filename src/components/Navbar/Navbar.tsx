@@ -1,54 +1,36 @@
-import React from 'react';
-import s from './Navbar.module.css';
-import { NavLink } from 'react-router-dom';
+import React from "react";
+import s from "./Navbar.module.css";
+import { NavLink, withRouter } from "react-router-dom";
+import { compose } from "redux";
+import { connect } from "react-redux";
+import { AppStateType } from "../../redux/redux-store";
+import { getNavSelector } from "../../redux/selectors";
+import { HeaderLinkType } from "../../redux/navbar-reducer";
+import List from "@mui/material/List";
+import { ListItem } from "@mui/material";
 
-// import {NavLink} from 'react-router-dom';
-
-
-const Navbar = (props:any) => {
-    let headerLink = [
-        {link:"/profile", name: "Profile"},
-        {link:"/dialogs", name: "Dialogs"},
-        {link:"/news", name: "News"},
-        {link:"/music", name: "Music"},
-        {link:"/settings", name: "Settings"},
-    ]
-
-    type NavbarType = {
-        link:string,
-        name:string
-    }
- 
-    
-       let navbarItems = headerLink.map((item:NavbarType) => {
-        return (
-          <li className={s.item}><NavLink className={s.link} activeClassName={s.activeclass} to={item.link}>{item.name}</NavLink></li>
-        )
-       
-      })
-        
-      
-       
-    
-
+const Navbar = React.memo((props: any) => {
+  let navbarItems = props.nav.map((item: HeaderLinkType) => {
+    return (
+      <ListItem className={s.item}>
+        <NavLink activeClassName={s.activeclass} to={item.link}>
+          {item.name}
+        </NavLink>
+      </ListItem>
+    );
+  });
 
   return (
-
     <section className={s.navbar}>
-      
-     
-        <ul className={s.list}>
-       {navbarItems}
-          
-          {/* <li className={`${s.item} ${s.login}`}>{props.isAuth ? <div>{props.login} <button onClick={props.outLogin}>Выход</button></div> : <NavLink to='/login' className={({isActive, isPending}) =>
-            isPending ? "pending" : isActive ? `${s.active}` : `${s.link}`
-          } href="#">Вход</NavLink>}</li> */}
-        </ul>
-    
-
-    </section >
-
+      <List className={s.list}>{navbarItems}</List>
+    </section>
   );
-}
+});
 
-export {Navbar};
+let mapStateToProps = (state: AppStateType) => ({
+  nav: getNavSelector(state),
+});
+export default compose<React.ComponentType>(
+  connect(mapStateToProps, {}),
+  withRouter
+)(Navbar);

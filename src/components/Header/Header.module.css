@@ -1,45 +1,56 @@
+.header {
 
-.header{
-    background-color: green;
+    background: rgb(2, 68, 62);
+    background: linear-gradient(90deg, rgba(2, 68, 62, 1) 0%, rgba(50, 129, 110, 1) 51%, rgba(162, 209, 203, 1) 100%);
     grid-column: span 2;
     display: flex;
     padding: 10px;
-    
-    }
-    .nav {
-    width: 100%;
-    padding:0 20px;
-    }
-    .list{
-        list-style-type: none;
-        display: flex;
-        justify-content: space-between;
-    
-    
-    }
-    
-    .link{
-        display: block;
-    color:white;
-    text-decoration: none;
-    padding: 10px;
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+
+    .link {
+        padding: 0 10px;
+        color: white;
+        font-weight: 500;
+
+
     }
 
-    .item{
-        background-color: rgba(61, 73, 42, 0.226);
+    .nav {
+        width: 100%;
+        padding: 0 20px;
     }
+
+
+    .item {
+
+        font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+
+
+    }
+
     /* .login{
         background: pink;
         border-radius: 10%;
         border: 1px solid white;
     } */
-    
- .active {
-      
-      
+
+    .active {
         text-decoration: underline;
         padding: 10px;
-        color:black;
-     
+        color: black;
     }
-    
+
+    a {
+        font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+    }
+
+    a:hover {
+
+        text-decoration: underline;
+        text-decoration-color: coral;
+        transition: ease 0.3s;
+        text-underline-position: under;
+
+
+    }
+}

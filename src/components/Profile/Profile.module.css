@@ -1,4 +1,81 @@
+.profile {
+    padding: 0 0 0 10px;
 
-.profile_img{
-    width: 50%;
+    h2 {
+        margin: 0;
+        text-transform: uppercase;
+        font-size: 1.3rem;
+    }
 }
+
+.photo_profile {
+
+    font-size: 0.8rem;
+
+    input {
+        display: none;
+    }
+}
+
+.wrapper_profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 10px;
+}
+
+.profile_id {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+}
+
+.avatar {
+    display: block;
+    justify-content: center;
+    width: 100px;
+    height: 100px;
+    overflow: hidden; /* Скрывает лишнее за пределами круга */
+    border-radius: 50%; /* Делает контейнер круглым */
+
+}
+
+.avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: fill; /* Масштабирует изображение так, чтобы оно полностью помещалось */
+}
+
+.profile_info {
+    display: flex;
+    justify-content: start;
+    align-items: start;
+    text-align: left;
+    padding: 20px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+    div {
+        border-bottom: 1px solid black;
+
+        &:last-child {
+            border-bottom: none;
+        }
+
+
+    }
+
+
+}
+
+.edit_btn_profile {
+    width: 100%;
+    background: rgb(2, 68, 62);
+    color: white;
+    font-weight: 600;
+    font-family: inherit;
+    padding: 7px 0;
+    border: none;
+    background: linear-gradient(90deg, rgba(2, 68, 62, 1) 0%, rgba(50, 129, 110, 1) 51%, rgba(162, 209, 203, 1) 100%);
+    justify-self: center;
+}
+

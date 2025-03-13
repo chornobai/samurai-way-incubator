@@ -1,6 +1,6 @@
 import React, { lazy, Suspense, useEffect } from "react";
 import "./App.css";
-import { BrowserRouter, Route, withRouter } from "react-router-dom";
+import { BrowserRouter, Redirect, Route, withRouter } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 import LinearProgress from "@mui/material/LinearProgress";
 import { connect } from "react-redux";
@@ -33,7 +33,7 @@ const App: React.FC<any> = (props) => {
         <Suspense fallback={<LinearProgress />}>
           <HeaderContainer />
           <Navbar />
-          <Route path="/" exact render={() => <ProfileContainer />} />
+          <Route path="/" render={() => <Redirect to={"/profile"} />} />
           <Route path="/dialogs" render={() => <DialogsContainer />} />
           <Route path="/profile" render={() => <ProfileContainer />} />
           <Route path="/users" render={() => <UsersContainer />} />
